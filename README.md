@@ -1,13 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 # This is the Next.js rewrite for my IMS project
+
 > [!NOTE]  
 > Still in development
 
 ## Details:
 
 The Information Management System (IMS) : : is a web-based application designed to streamline data management and product cataloging for businesses. It provides a user-friendly interface for efficiently storing and retrieving information, making it a valuable tool for various industries.
-
 
 ## Getting Started
 
@@ -37,4 +37,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
