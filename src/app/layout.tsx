@@ -141,9 +141,9 @@ export default function RootLayout({
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <Link href="/login" >
-                  <DropdownMenuItem>Login</DropdownMenuItem>
-                </Link>
+                <DropdownMenuItem>
+                  <Link href="/login">Login</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
