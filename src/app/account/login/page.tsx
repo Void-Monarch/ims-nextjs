@@ -59,7 +59,7 @@ export default function Component() {
           <div>
             <span>
               Don&apos;t have an account? &nbsp;
-              <Link href="/signup" className="underline text-green-400">Signup</Link>
+              <Link href="/account/signup" className="underline ">Signup</Link>
             </span>
           </div>
         </CardFooter>
