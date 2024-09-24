@@ -6,7 +6,6 @@ import {
   DollarSign,
   Users,
 } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import {
   Table,
   TableBody,
@@ -27,7 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function Dashboard() {
+export default async function Dashboard() {
   return (
     <div className="flex w-full flex-col">
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">

@@ -26,6 +26,8 @@ import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
+import { auth, signOut } from "../lib/auth";
+
 export const metadata: Metadata = {
   title: "IMS",
   description: "IMS : Inventory Management System",
@@ -38,11 +40,13 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body className="bg-black ">
@@ -52,7 +56,7 @@ export default function RootLayout({
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
+            <span className="sr-only">IMS Inc</span>
           </Link>
 
           <NavMenu />
@@ -141,9 +145,22 @@ export default function RootLayout({
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <Link href="/account/login" passHref>
-                  <DropdownMenuItem>Login</DropdownMenuItem>
-                </Link>
+                {session?.user ? (
+                  <form
+                    action={async () => {
+                      "use server";
+                      await signOut();
+                    }}
+                  >
+                    <button type="submit" className="w-full">
+                      <DropdownMenuItem>SignOut</DropdownMenuItem>
+                    </button>
+                  </form>
+                ) : (
+                  <Link href="/account/login" passHref>
+                    <DropdownMenuItem>Login</DropdownMenuItem>
+                  </Link>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

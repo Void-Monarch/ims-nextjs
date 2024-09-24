@@ -9,6 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { signIn } from "../../../lib/auth";
+
 import { SVGProps } from "react";
 
 const GoogleIcon = (props: SVGProps<SVGSVGElement>) => (
@@ -41,29 +43,38 @@ const GoogleIcon = (props: SVGProps<SVGSVGElement>) => (
 
 export default function Component() {
   return (
-    <Card className="w-[350px]">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Login</CardTitle>
-        <CardDescription>Login with one click</CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <Button
-          variant="outline"
-          type="button"
-          className="bg-white text-black hover:bg-gray-50 border-gray-300"
-        >
-          <GoogleIcon className="mr-2 h-5 w-5" />
-          Sign in with Google
-        </Button>
-        <CardFooter>
-          <div>
-            <span>
-              Don&apos;t have an account? &nbsp;
-              <Link href="/account/signup" className="underline ">Signup</Link>
-            </span>
-          </div>
-        </CardFooter>
-      </CardContent>
-    </Card>
+    <form
+      action={async () => {
+        "use server";
+        await signIn("google", { redirectTo: "/dashboard" });
+      }}
+    >
+      <Card className="w-[350px]">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>Login with one click</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <Button
+            variant="outline"
+            type="submit"
+            className="bg-white text-black hover:bg-gray-50 border-gray-300"
+          >
+            <GoogleIcon className="mr-2 h-5 w-5" />
+            Sign in with Google
+          </Button>
+          <CardFooter>
+            <div>
+              <span>
+                Don&apos;t have an account? &nbsp;
+                <Link href="/account/signup" className="underline ">
+                  Signup
+                </Link>
+              </span>
+            </div>
+          </CardFooter>
+        </CardContent>
+      </Card>
+    </form>
   );
 }
