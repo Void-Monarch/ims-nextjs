@@ -2,7 +2,7 @@ import Loader from "../components/custom/Loaders/MainLoader";
 
 export default function Loading() {
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center overflow-hidden">
       <Loader />
     </div>
   );
