@@ -10,6 +10,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +28,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 import { auth, signOut } from "../lib/auth";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "IMS",
@@ -135,11 +137,26 @@ export default async function RootLayout({
                   size="icon"
                   className="rounded-full"
                 >
-                  <CircleUser className="h-5 w-5" />
-                  <span className="sr-only">Toggle user menu</span>
+                  {session?.user ? (
+                    <Avatar className="ring-1 ring-white">
+                      <AvatarImage src={session?.user.image} />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  ) : (
+                    <>
+                      <CircleUser className="h-5 w-5" />
+                      <span className="sr-only">Toggle user menu</span>
+                    </>
+                  )}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {session?.user ? (
+                  <>
+                    <DropdownMenuLabel>{session?.user.name}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                  </>
+                ) : null}
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Settings</DropdownMenuItem>
@@ -166,6 +183,7 @@ export default async function RootLayout({
           </div>
         </header>
         <main className="">{children}</main>
+        <Toaster />
       </body>
     </html>
   );
