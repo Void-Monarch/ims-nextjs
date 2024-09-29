@@ -10,10 +10,10 @@ const authConfig = {
     }),
   ],
   callbacks: {
-    authorized({ auth, request }) {
+    authorized({ auth }) {
       return !!auth?.user;
     },
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       try {
         if (await doesUserExist(user.email)) {
           return true;
@@ -25,7 +25,7 @@ const authConfig = {
         return false;
       }
     },
-    async session({ session, user }) {
+    async session({ session }) {
       const existing_user = await getUserByEmail(session.user.email);
       session.user.userId = existing_user?.id;
       return session;
