@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import { User } from "../../node_modules/@auth/core/src/types";
+
 
 export async function doesUserExist(email: string): Promise<boolean> {
     const prisma = new PrismaClient();
@@ -10,12 +12,12 @@ export async function doesUserExist(email: string): Promise<boolean> {
     return !!user;
 }
 
-export async function createUserOnGoogleLogin(user: { email: string, name: string }): Promise<void> {
+export async function createUserOnGoogleLogin(user: User): Promise<void> {
     const prisma = new PrismaClient();
     await prisma.user.create({
         data: {
-            email: user.email,
-            name: user.name,
+            email: user.email!,
+            name: user.name!,
         },
     });
 }
@@ -38,7 +40,7 @@ export async function createCustomer(customer: {
     email: string,
     phone: string | null,
     address: string | null
-}, id : string) {
+}, id: string) {
     const prisma = new PrismaClient();
     return await prisma.customer.create({
         data: {
