@@ -105,7 +105,7 @@ export async function getCustomerById(id: string) {
 export async function createProduct(data: {
     name: string,
     price: number,
-    description: string,
+    description?: string,
     image?: string,
     stock: number,
     catagory: string
