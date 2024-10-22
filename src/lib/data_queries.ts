@@ -116,6 +116,7 @@ export async function createProduct(data: {
         data: {
             name: data.name,
             price: data.price,
+            description: data.description,
             image: data.image,
             stock: data.stock,
             catagory: data.catagory,
