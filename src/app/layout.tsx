@@ -139,7 +139,7 @@ export default async function RootLayout({
                 >
                   {session?.user ? (
                     <Avatar className="ring-1 ring-white">
-                      <AvatarImage src={session?.user.image ?? ""} />
+                      <AvatarImage src={session?.user?.image ?? ""} />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                   ) : (
