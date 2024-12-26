@@ -42,10 +42,7 @@ export async function getUserByEmail(email: string) {
     return await prisma.user.findFirst({
         where: {
             email: email,
-        },
-        include: {
-            customer: true,
-        },
+        }
     });
 }
 
@@ -55,7 +52,7 @@ export async function createCustomer(customer: {
     email: string,
     phone: string | null,
     address: string | null
-}, id: string) {
+}) {
     const prisma = new PrismaClient();
     return await prisma.customer.create({
         data: {
@@ -63,7 +60,6 @@ export async function createCustomer(customer: {
             email: customer.email,
             phone: customer.phone,
             address: customer.address,
-            userId: id
         }
     });
 }
@@ -94,9 +90,7 @@ export async function getCustomerById(id: string) {
     return await prisma.customer.findFirst({
         where: {
             id: id
-        }, include: {
-            User: true,
-        },
+        }
     });
 }
 
@@ -109,7 +103,6 @@ export async function createProduct(data: {
     image?: string,
     stock: number,
     catagory: string
-    storeId: string
 }) {
     const prisma = new PrismaClient();
     return await prisma.product.create({
@@ -120,7 +113,6 @@ export async function createProduct(data: {
             image: data.image,
             stock: data.stock,
             catagory: data.catagory,
-            storeId: data.storeId,
         }
     });
 
@@ -183,69 +175,7 @@ export async function getProductsAll() {
     return await prisma.product.findMany();
 }
 
-export async function getProductsForStore(data: string) {
+export async function getUserAll() {
     const prisma = new PrismaClient();
-    return await prisma.product.findMany({
-        where: {
-            storeId: data
-        }
-    });
+    return await prisma.user.findMany();
 }
-
-export async function createStore(data: {
-    name: string,
-    description: string,
-    gstin: string,
-    phone: string,
-    email?: string,
-    address?: string,
-    userId: string
-}) {
-    const prisma = new PrismaClient();
-    return await prisma.store.create({
-        data: {
-            name: data.name,
-            description: data.description,
-            gstin: data.gstin,
-            phone: data.phone,
-            email: data.email || null,
-            address: data.address || null,
-            userId: data.userId
-        }
-    });
-}
-
-export async function getStoreByUser(data: string) {
-    const prisma = new PrismaClient();
-    return await prisma.store.findFirst({
-        where: {
-            userId: data
-        }
-    });
-}
-
-export async function updateStore(data: {
-    id: string,
-    name: string,
-    description: string,
-    gstin: string,
-    phone: string,
-    email?: string,
-    address?: string
-}) {
-    const prisma = new PrismaClient();
-    return await prisma.store.update({
-        where: {
-            id: data.id
-        },
-        data: {
-            name: data.name,
-            description: data.description,
-            gstin: data.gstin,
-            phone: data.phone,
-            email: data.email,
-            address: data.address
-        }
-    });
-}
-

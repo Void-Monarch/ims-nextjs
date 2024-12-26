@@ -56,16 +56,19 @@ export default function SignupForm() {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" name="password" type="password" />
+              <Input id="password" name="password" type="password" required />
             </div>
             <Button type="submit" className="w-full">
               Create an account
             </Button>
-            <Button variant="outline" className="w-full">
-              Sign up with GitHub
-            </Button>
           </div>
         </form>
+        <br />
+        <Link href="/account/login">
+          <Button variant="outline" className="w-full">
+            Sign up with Google
+          </Button>
+        </Link>
         <div className="mt-4 text-center text-sm">
           Already have an account?{" "}
           <Link href="/account/login" className="underline">

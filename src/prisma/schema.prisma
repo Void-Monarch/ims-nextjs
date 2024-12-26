@@ -13,15 +13,22 @@ enum Provider {
   email
 }
 
+enum Roles {
+  admin
+  level_0
+  level_1
+  level_2
+  level_3
+}
+
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  email     String     @unique
+  email     String   @unique
   password  String?
-  provider  Provider   @default(google)
-  createdAt DateTime   @default(now())
-  customer  Customer[]
-  Store     Store[]
+  provider  Provider @default(google)
+  createdAt DateTime @default(now())
+  role      Roles?    
 }
 
 model Customer {
@@ -31,8 +38,6 @@ model Customer {
   phone     String?
   address   String?
   createdAt DateTime @default(now())
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @db.ObjectId
   order     Order[]
 }
 
@@ -45,8 +50,6 @@ model Product {
   description String?
   catagory    String
   createdAt   DateTime @default(now())
-  Store       Store    @relation(fields: [storeId], references: [id])
-  storeId     String   @db.ObjectId
 }
 
 model Order {
@@ -56,8 +59,6 @@ model Order {
   createdAt  DateTime       @default(now())
   Customer   Customer?      @relation(fields: [customerId], references: [id])
   customerId String?        @db.ObjectId
-  Store      Store          @relation(fields: [storeId], references: [id])
-  storeId    String         @db.ObjectId
   products   AddedProduct[]
 }
 
@@ -66,17 +67,3 @@ type AddedProduct {
   quantity Int
 }
 
-model Store {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  email       String?   @unique
-  phone       String?
-  address     String?
-  gstin       String?   @unique
-  description String?
-  createdAt   DateTime  @default(now())
-  User        User?     @relation(fields: [userId], references: [id])
-  userId      String?   @db.ObjectId
-  Order       Order[]
-  Product     Product[]
-}

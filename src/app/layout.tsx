@@ -20,8 +20,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { CircleUser, Package2, Search } from "lucide-react";
+// import { Input } from "@/components/ui/input";
+import { CircleUser, Gem} from "lucide-react";
 // import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -51,13 +51,13 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="bg-black ">
-        <header className="sticky top-0  bg-black flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+      <body className="bg-neutral-100 text-black">
+        <header className="sticky top-0 z-50  bg-neutral-100 flex h-16 items-center gap-4 border-b px-4 md:px-6">
           <Link
             href="/"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Package2 className="h-6 w-6" />
+            <Gem className="h-6 w-6" />
             <span className="sr-only">IMS Inc</span>
           </Link>
 
@@ -118,14 +118,14 @@ export default async function RootLayout({
 
           <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
             <form className="ml-auto flex-1 sm:flex-initial">
-              <div className="relative">
+              {/* <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search products..."
                   className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
                 />
-              </div>
+              </div> */}
             </form>
 
             {/* Profile icon and account menu */}
@@ -135,10 +135,10 @@ export default async function RootLayout({
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="rounded-full"
+                  className="rounded-full ring-black ring-1"
                 >
                   {session?.user ? (
-                    <Avatar className="ring-1 ring-white">
+                    <Avatar className="ring-1 ring-black">
                       <AvatarImage src={session?.user?.image ?? ""} />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
@@ -150,7 +150,7 @@ export default async function RootLayout({
                   )}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="bg-amber-300">
                 {session?.user ? (
                   <>
                     <DropdownMenuLabel>{session?.user.name}</DropdownMenuLabel>
@@ -196,8 +196,10 @@ function NavMenu() {
         {/* Item one */}
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger className="hover:underline hover:underline-offset-4">
+            Getting Started
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="bg-amber-300">
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
@@ -205,13 +207,14 @@ function NavMenu() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
-                    <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">IMS</div>
+                    <Icons.Gem className="h-6 w-6" />
+                    <div className="mb-2 mt-4 text-lg font-medium">
+                      Khwaahish Jewellery
+                    </div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      A application designed to streamline data management and
-                      product cataloging for businesses. It provides a
-                      user-friendly interface for efficiently storing and
-                      retrieving information.
+                      Since 2003, our brand – Khwaahish - has become Chennai’s
+                      premium destination for Natural-Diamond Jewellery designed
+                      with passion and high level of craftsmanship
                     </p>
                   </a>
                 </NavigationMenuLink>
@@ -220,10 +223,10 @@ function NavMenu() {
                 Re-usable components built using Radix UI and Tailwind CSS.
               </ListItem>
               <ListItem href="/dashboard" title="Dashboard">
-                GO to Dashboard. An overview of your business.
+                Go to Dashboard. An overview of your business.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
+              <ListItem href="/menu/adminusers" title="Manage Admin Users">
+                Manage Admin Users. Add, Edit, Delete Admin Users.
               </ListItem>
             </ul>
           </NavigationMenuContent>
@@ -232,8 +235,10 @@ function NavMenu() {
         {/* Item two */}
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger className="hover:underline hover:underline-offset-4">
+            Menu
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="bg-amber-300">
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
                 <ListItem
@@ -251,8 +256,13 @@ function NavMenu() {
         {/* Item three */}
         <NavigationMenuItem>
           <Link href="/inventory" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
+            <NavigationMenuLink
+              className={
+                navigationMenuTriggerStyle() +
+                " hover:underline hover:underline-offset-4"
+              }
+            >
+              Visit Site
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
