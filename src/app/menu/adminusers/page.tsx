@@ -5,7 +5,6 @@ import type { ColDef, RowSelectionOptions } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
-
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const rowSelection: RowSelectionOptions = {
