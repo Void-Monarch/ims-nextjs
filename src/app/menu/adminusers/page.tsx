@@ -27,6 +27,7 @@ const GridExample = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [rowData, setRowData] = useState<any[]>([]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     {
       headerName: "ID",
