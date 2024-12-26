@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Roles } from '@prisma/client';
 
 export async function doesUserExist(email: string): Promise<boolean> {
     const prisma = new PrismaClient();
@@ -23,6 +23,7 @@ export async function createUserOnGoogleLogin(user: { email: string, name: strin
 export async function updateUser(data: {
     id: string,
     name: string
+    role?: Roles
 }) {
     const prisma = new PrismaClient();
     return await prisma.user.update({
@@ -30,7 +31,8 @@ export async function updateUser(data: {
             id: data.id
         },
         data: {
-            name: data.name
+            name: data.name,
+            role: data.role,
         }
     });
 }
@@ -70,6 +72,7 @@ export async function updateCustomer(data: {
     phone: string | null,
     email: string,
     address: string | null
+    active?: boolean
 }) {
     const prisma = new PrismaClient();
     return await prisma.customer.update({
@@ -80,7 +83,8 @@ export async function updateCustomer(data: {
             name: data.name,
             phone: data.phone,
             email: data.email,
-            address: data.address
+            address: data.address,
+            active: data.active
         }
     });
 }
@@ -103,6 +107,7 @@ export async function createProduct(data: {
     image?: string,
     stock: number,
     catagory: string
+    active?: boolean
 }) {
     const prisma = new PrismaClient();
     return await prisma.product.create({
@@ -113,6 +118,7 @@ export async function createProduct(data: {
             image: data.image,
             stock: data.stock,
             catagory: data.catagory,
+            active: data?.active
         }
     });
 
@@ -126,6 +132,7 @@ export async function updateProduct(data: {
     image?: string,
     stock: number,
     catagory: string
+    active?: boolean
 }) {
     const prisma = new PrismaClient();
     return await prisma.product.update({
@@ -138,7 +145,8 @@ export async function updateProduct(data: {
             description: data.description,
             image: data.image,
             stock: data.stock,
-            catagory: data.catagory
+            catagory: data.catagory,
+            active: data.active
         }
     });
 }

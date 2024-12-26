@@ -28,7 +28,9 @@ model User {
   password  String?
   provider  Provider @default(google)
   createdAt DateTime @default(now())
-  role      Roles?    
+  role      Roles?
+  active    Boolean  @default(true)
+  image     String?
 }
 
 model Customer {
@@ -39,6 +41,7 @@ model Customer {
   address   String?
   createdAt DateTime @default(now())
   order     Order[]
+  active   Boolean  @default(true)
 }
 
 model Product {
@@ -50,6 +53,7 @@ model Product {
   description String?
   catagory    String
   createdAt   DateTime @default(now())
+  active      Boolean  @default(true)
 }
 
 model Order {
@@ -66,4 +70,3 @@ type AddedProduct {
   id       String @db.ObjectId
   quantity Int
 }
-
