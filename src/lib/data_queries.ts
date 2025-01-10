@@ -81,7 +81,6 @@ export async function getJewelleryWithDetails(id: string) {
             category: true,
             supplier: true,
             sellable: true,
-            rentals: true
         }
     });
 }
@@ -103,7 +102,6 @@ export async function getCustomerWithRentals(id: string) {
     return await prisma.customer.findUnique({
         where: { id },
         include: {
-            rentals: true,
             sellables: true,
             services: true
         }
