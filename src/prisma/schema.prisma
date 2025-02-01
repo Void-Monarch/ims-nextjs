@@ -21,94 +21,89 @@ enum PaymentStatus {
 }
 
 model Category {
-  id             String      @id @default(auto()) @map("_id") @db.ObjectId
-  name           String      @unique
-  description    String?     @map("desc")
-  commonImageUrl String?     @map("common_image_url")
-  jewellery      Jewellery[]
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String    @unique
+  description    String?   @map("desc")
+  commonImageUrl String?   @map("common_image_url")
+  product        Product[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
-model Jewellery {
-  id           String            @id @default(auto()) @map("_id") @db.ObjectId
+model Product {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   material     String
   image_url    String?
   supply_price Float
-  category     Category          @relation(fields: [categoryId], references: [id])
-  categoryId   String            @db.ObjectId
-  supplier     Supplier          @relation(fields: [supplierId], references: [id])
-  supplierId   String            @db.ObjectId
+  category     Category  @relation(fields: [categoryId], references: [id])
+  categoryId   String    @db.ObjectId
+  supplier     Supplier  @relation(fields: [supplierId], references: [id])
+  supplierId   String    @db.ObjectId
   sellable     Sellable?
-  rentals      CustomerRentals[]
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Supplier {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   company_name String
   address      String
   email        String?
   telephone    String
   category     String
-  jewellery    Jewellery[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  product      Product[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   @@index([email])
 }
 
 model Sellable {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  jewellery   Jewellery @relation(fields: [jewelleryId], references: [id])
-  jewelleryId String    @unique @db.ObjectId
-  sell_price  Float
-  customer    Customer  @relation(fields: [customerId], references: [id])
-  customerId  String    @db.ObjectId
-  orders      Orders?
-}
-
-model CustomerRentals {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  rental_date  DateTime
-  return_date  DateTime
-  rental_price Float
-  customer     Customer  @relation(fields: [customerId], references: [id])
-  customerId   String    @db.ObjectId
-  jewellery    Jewellery @relation(fields: [jewelleryId], references: [id])
-  jewelleryId  String    @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  String   @unique @db.ObjectId
+  sell_price Float
+  customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String   @db.ObjectId
+  orders     Orders?
 }
 
 model Customer {
-  id        String            @id @default(auto()) @map("_id") @db.ObjectId
-  nic       String            @unique
-  firstName String            @map("first_name")
-  lastName  String            @map("last_name")
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  nic       String     @unique
+  firstName String     @map("first_name")
+  lastName  String     @map("last_name")
   address   String
   telephone String
   email     String?
   password  String
-  rentals   CustomerRentals[]
   sellables Sellable[]
-  services  Service[]
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@index([email, nic])
 }
 
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  provider  String
+  email     String
+  role      String?
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
 model Employee {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  nic        String
-  fname      String
-  lname      String
-  email      String
-  position   String
-  leaves     Leave[]
-  admin      Admin?
-  DeliverBoy DeliverBoy?
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  nic      String
+  fname    String
+  lname    String
+  email    String
+  position String
+  admin    Admin?
 }
 
 model Admin {
@@ -119,42 +114,6 @@ model Admin {
   password   String
   email      String
   role       String
-  records    Record[]
-}
-
-model Record {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  activity    String
-  login_time  DateTime
-  logout_time DateTime?
-  admin       Admin     @relation(fields: [adminId], references: [id])
-  adminId     String    @db.ObjectId
-  leave       Leave?    @relation(fields: [leaveId], references: [id])
-  leaveId     String?   @unique @db.ObjectId
-}
-
-model Leave {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  leave_from DateTime
-  leave_to   DateTime
-  reason     String
-  employee   Employee @relation(fields: [employeeId], references: [id])
-  employeeId String   @db.ObjectId
-  record     Record?
-}
-
-model DeliverBoy {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  employeeId String     @unique @db.ObjectId
-  employee   Employee   @relation(fields: [employeeId], references: [id])
-  username   String
-  password   String
-  telephone  String
-  deliveries Delivery[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-
-  @@index([username])
 }
 
 model Delivery {
@@ -168,7 +127,6 @@ model Delivery {
   deliveredTime    DateTime?      @map("delivered_time")
   status           DeliveryStatus @default(PENDING)
   distance         Float
-  delivery_boy     DeliverBoy     @relation(fields: [deliveryBoyId], references: [id])
   deliveryBoyId    String         @db.ObjectId
   order            Orders?
   createdAt        DateTime       @default(now())
@@ -195,44 +153,4 @@ model Payment {
   payment_date   DateTime
   payment_status String
   orders         Orders[]
-}
-
-model Design {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String
-  image_url   String?
-  price       Float
-  makes       Make[]
-}
-
-model Make {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
-  status        String
-  weight        Float
-  damage_type   String
-  current_price Float
-  design        Design @relation(fields: [designId], references: [id])
-  designId      String @db.ObjectId
-}
-
-model Repair {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  service_id    String
-  repair_type   String
-  item_name     String
-  damage_type   String
-  description   String?
-  current_price Float
-  service       Service @relation(fields: [serviceId], references: [id])
-  serviceId     String  @db.ObjectId
-}
-
-model Service {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  image_url     String
-  jewellerytype String
-  customer      Customer @relation(fields: [customerId], references: [id])
-  customerId    String   @db.ObjectId
-  repairs       Repair[]
 }

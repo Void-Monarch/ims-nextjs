@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 // import { Input } from "@/components/ui/input";
-import { CircleUser, Gem} from "lucide-react";
+import { CircleUser, Gem } from "lucide-react";
 // import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -208,13 +208,12 @@ function NavMenu() {
                     href="/"
                   >
                     <Icons.Gem className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      Khwaahish Jewellery
-                    </div>
+                    <div className="mb-2 mt-4 text-lg font-medium">IMS</div>
                     <p className="text-sm leading-tight text-muted-foreground">
-                      Since 2003, our brand – Khwaahish - has become Chennai’s
-                      premium destination for Natural-Diamond Jewellery designed
-                      with passion and high level of craftsmanship
+                      IMS - Inventory Management System. Is a system for
+                      managing inventory, sales, and customer data. It is a
+                      web-based application that allows you to manage your
+                      business from anywhere in the world.
                     </p>
                   </a>
                 </NavigationMenuLink>

@@ -19,8 +19,8 @@ const authConfig = {
         if (await doesUserExist(user.email)) {
           return true;
         } else {
-          // await createUserOnGoogleLogin(user);
-          throw new Error("User not found");
+          await createUserOnGoogleLogin(user);
+          // throw new Error("User not found");
           return true;
         }
       } catch {
