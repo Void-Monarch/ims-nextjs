@@ -1,4 +1,4 @@
-import { PrismaClient, DeliveryStatus, PaymentStatus, Admin } from '@prisma/client';
+import { PrismaClient, DeliveryStatus, PaymentStatus, User } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -11,9 +11,9 @@ export async function doesUserExist(email: string): Promise<boolean> {
     return !!user;
 }
 
-export async function getUserByEmail(email: string): Promise<Admin | null> {
+export async function getUserByEmail(email: string): Promise<User | null> {
 
-    return await prisma.admin.findFirst({
+    return await prisma.user.findFirst({
         where: {
             email: email,
         },
