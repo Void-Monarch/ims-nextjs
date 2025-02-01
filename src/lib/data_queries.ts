@@ -26,6 +26,7 @@ export async function createUserOnGoogleLogin(user: { email: string, name: strin
         data: {
             email: user.email,
             name: user.name,
+            role: 'USER',
             provider: 'google',
         },
     });

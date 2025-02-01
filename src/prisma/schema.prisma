@@ -91,6 +91,7 @@ model User {
   provider  String
   email     String
   role      String?
+  active   Boolean  @default(true)
   createdAt DateTime @default(now())
 
   @@index([email])
