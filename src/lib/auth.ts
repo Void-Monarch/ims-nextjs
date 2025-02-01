@@ -1,7 +1,7 @@
 // @ts-nocheck
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { doesUserExist, getUserByEmail } from "./data_queries";
+import { doesUserExist, getUserByEmail , createUserOnGoogleLogin } from "./data_queries";
 
 const authConfig = {
   providers: [
@@ -20,7 +20,6 @@ const authConfig = {
           return true;
         } else {
           await createUserOnGoogleLogin(user);
-          // throw new Error("User not found");
           return true;
         }
       } catch {
