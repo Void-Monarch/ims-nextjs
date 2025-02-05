@@ -1,9 +1,10 @@
-// @ts-nocheck
-import NextAuth from "next-auth";
+import NextAuth from "next-auth"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "../prisma/prisma"
 import Google from "next-auth/providers/google";
-import { doesUserExist, getUserByEmail , createUserOnGoogleLogin } from "./data_queries";
 
-const authConfig = {
+export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -14,31 +15,18 @@ const authConfig = {
     authorized({ auth }) {
       return !!auth?.user;
     },
-    async signIn({ user }) {
-      try {
-        if (await doesUserExist(user.email)) {
-          return true;
-        } else {
-          await createUserOnGoogleLogin(user);
-          return true;
-        }
-      } catch {
-        return false;
-      }
-    },
-    async session({ session }) {
-      const existing_user = await getUserByEmail(session.user.email);
-      session.user.userId = existing_user?.id;
-      session.user.role = existing_user.role;
-      return session;
-    },
-
+    //   async signIn({ user }) {
+    //     try {
+    //       if (await doesUserExist(user.email)) {
+    //         return true;
+    //       } else {
+    //         await createUserOnGoogleLogin(user);
+    //         return true;
+    //       }
+    //     } catch(e) {
+    //       console.log(`error in signIn callback: ${e}`);
+    //       return false;
+    //     }
+    //   },
   }
-};
-
-export const {
-  auth,
-  signIn,
-  signOut,
-  handlers: { GET, POST },
-} = NextAuth(authConfig);
+})

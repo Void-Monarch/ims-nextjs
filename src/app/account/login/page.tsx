@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -63,16 +62,7 @@ export default function Component() {
             <GoogleIcon className="mr-2 h-5 w-5" />
             Sign in with Google
           </Button>
-          <CardFooter>
-            <div>
-              <span>
-                Don&apos;t have an account? &nbsp;
-                <Link href="/account/signup" className="underline ">
-                  Signup
-                </Link>
-              </span>
-            </div>
-          </CardFooter>
+          <CardFooter></CardFooter>
         </CardContent>
       </Card>
     </form>
